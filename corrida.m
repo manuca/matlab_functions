@@ -8,7 +8,10 @@ function corrida(n)
 
   % Apertura de la PAM
   A = 0.85;
+  ts = 1/10;
 
   x_n = secuencia_pam(n, A);
-  % stem(x_n);
+  x_t = modular_pam(x_n, ts);
+
+  stem(x_t);
 end
