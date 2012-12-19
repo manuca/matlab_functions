@@ -16,6 +16,7 @@ function corrida(n)
 
   pulso_formador = sinc([-1:ceil(1/ts):1]);
   deteccion = conv(x_t, pulso_formador);
+  y_t = deteccion(1:ceil(1/ts):end);
 
   subplot(4, 1, 1);
   stem(x_n);
@@ -24,4 +25,12 @@ function corrida(n)
   subplot(4, 1, 2);
   stem(x_t);
   title('Señal modulada');
+
+  subplot(4, 1, 3);
+  stem(deteccion);
+  title('Señal luego de filtro adaptado');
+
+  subplot(4, 1, 4);
+  stem(y_t);
+  title('Señal detectada');
 end
