@@ -10,5 +10,5 @@ function corrida(n)
   A = 0.85;
 
   x_n = secuencia_pam(n, A);
-  stem(x_n);
+  % stem(x_n);
 end

@@ -1,18 +1,16 @@
-function [secuencia, s] = generar_senial(n)
-  % [secuencia, s] = generar_senial(n)
-  % secuencia: Secuencia aleatoria 4-PAM
-  % s: Señal modulada por pulso formador
+function s = generar_senial(secuencia_pam)
+  % s = generar_senial(secuencia_pam)
   %
-  % Genera la señal real con n símbolos
+  % Retorna:
+  % s: Señal modulada por pulso formador (sinc de período 1 y energía 1)
 
-  A = 1;
+  % Tiempo de muestreo
   ts = 1/10;
 
-  secuencia = secuencia_pam(n, A);
-  secuencia = upsample(secuencia, 1/ts);
+  simbolos = upsample(secuencia_pam, 1/ts);
 
   x = -1:ts:1;
   p = sinc(x);
 
-  s = conv(secuencia, p);
+  s = conv(simbolos, p);
 end
