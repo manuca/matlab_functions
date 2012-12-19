@@ -13,10 +13,12 @@ function corrida(n)
 
   x_n = secuencia_pam(n, A);
   x_t = modular_pam(x_n, ts);
+  % Eliminamos colas
+  x_t = x_t(10:end-10);
 
   pulso_formador = sinc([-1:ceil(1/ts):1]);
   deteccion = conv(x_t, pulso_formador);
-  y_t = deteccion(1:ceil(1/ts):end);
+  y_t = deteccion(1:ceil(1/ts):end-10);
 
   subplot(4, 1, 1);
   stem(x_n);
