@@ -1,3 +1,4 @@
+% vim: ff=unix fileencoding=latin1
 function s = secuencia_pam(n, A)
   % secuencia_pam(n)
   % 
