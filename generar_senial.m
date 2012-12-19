@@ -1,9 +1,10 @@
 function [secuencia, s] = generar_senial(n)
-% [secuencia, s] = generar_senial(n)
-% secuencia: Secuencia aleatoria 4-PAM
-% s: Señal modulada por pulso formador
-%
-% Genera la señal real con n símbolos
+  % [secuencia, s] = generar_senial(n)
+  % secuencia: Secuencia aleatoria 4-PAM
+  % s: Señal modulada por pulso formador
+  %
+  % Genera la señal real con n símbolos
+
   A = 1;
   ts = 1/10;
 
