@@ -37,7 +37,7 @@ function [x_n, x_t, y_t, y_n] = corrida(n)
   stem(y_t);
   title('Señal luego de filtro adaptado - y(t)');
 
-  y_n = y_t(1:ceil(1/ts):end-10);
+  y_n = y_t(1:ceil(1/ts):end-9);
 
   subplot(5, 1, 5);
   stem(y_n);
@@ -47,5 +47,5 @@ end
 function s = extraer(signal, n)
   % Eliminamos n primeros elementos 
   % y n últimos elementos
-  s = signal(n:end-n);
+  s = signal(n:(end-n-1));
 end
