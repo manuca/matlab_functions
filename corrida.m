@@ -1,5 +1,5 @@
 % vim: ff=unix fileencoding=latin1
-function [x_n, y_n] = corrida(n)
+function [x_n, x_t, y_t, y_n] = corrida(n)
   % Corre la simulación
   % n: Número de símbolos a transmitir (default: 10)
 
@@ -30,14 +30,14 @@ function [x_n, y_n] = corrida(n)
 
   pulso_formador = sinc([-1:ts:1]);
   norma_pulso = energia(pulso_formador, ts);
-  deteccion = conv(x_t, pulso_formador/norma_pulso) * ts ; % Aplico esta normalización
-  deteccion = extraer(deteccion, 10);
+  y_t = conv(x_t, pulso_formador/norma_pulso) * ts ; % Aplico esta normalización
+  y_t = extraer(y_t, 10);
 
   subplot(5, 1, 4);
-  stem(deteccion);
+  stem(y_t);
   title('Señal luego de filtro adaptado - y(t)');
 
-  y_n = deteccion(1:ceil(1/ts):end-10);
+  y_n = y_t(1:ceil(1/ts):end-10);
 
   subplot(5, 1, 5);
   stem(y_n);
