@@ -12,27 +12,36 @@ function corrida(n)
   ts = 1/10;
 
   x_n = secuencia_pam(n, A);
+
+  subplot(5, 1, 1);
+  stem(x_n);
+  title('Secuencia 4PAM');
+
   x_t = modular_pam(x_n, ts);
   % Eliminamos colas
   x_t = x_t(10:end-10);
 
-  pulso_formador = sinc([-1:ceil(1/ts):1]);
-  deteccion = conv(x_t, pulso_formador);
-  y_t = deteccion(1:ceil(1/ts):end-10);
-
-  subplot(4, 1, 1);
-  stem(x_n);
-  title('Secuencia 4PAM');
-
-  subplot(4, 1, 2);
+  subplot(5, 1, 2);
   stem(x_t);
   title('Señal modulada');
 
-  subplot(4, 1, 3);
+  subplot(5, 1, 3);
+  stem(awgn(x_t, 18.57, 'measured'));
+  title('Señal modulada con ruido 18.57 dB');
+
+  pulso_formador = sinc([-1:ts:1]);
+  norma_pulso = energia(pulso_formador, ts);
+  deteccion = conv(x_t, pulso_formador/norma_pulso);
+
+  fprintf('Energía filtro adaptado: %6.2f\n', norma_pulso);
+
+  subplot(5, 1, 4);
   stem(deteccion);
   title('Señal luego de filtro adaptado');
 
-  subplot(4, 1, 4);
+  y_t = deteccion(1:ceil(1/ts):end-10);
+
+  subplot(5, 1, 5);
   stem(y_t);
   title('Señal detectada');
 end
