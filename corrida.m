@@ -18,8 +18,7 @@ function corrida(n)
   title('Secuencia 4PAM');
 
   x_t = modular_pam(x_n, ts);
-  % Eliminamos colas
-  x_t = x_t(10:end-10);
+  x_t = extraer(x_t, 10);
 
   subplot(5, 1, 2);
   stem(x_t);
@@ -32,6 +31,7 @@ function corrida(n)
   pulso_formador = sinc([-1:ts:1]);
   norma_pulso = energia(pulso_formador, ts);
   deteccion = conv(x_t, pulso_formador/norma_pulso);
+  deteccion = extraer(deteccion, 10);
 
   fprintf('Energía filtro adaptado: %6.2f\n', norma_pulso);
 
@@ -43,5 +43,11 @@ function corrida(n)
 
   subplot(5, 1, 5);
   stem(y_t);
-  title('Señal detectada');
+  title('Señal detectada - y(t)');
+end
+
+function s = extraer(signal, n)
+  % Eliminamos n primeros elementos 
+  % y n últimos elementos
+  s = signal(n:end-n);
 end
