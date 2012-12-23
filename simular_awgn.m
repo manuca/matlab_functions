@@ -35,6 +35,9 @@ function [x_n, x_t, y_t, mfo, y_n] = simular_awgn(n)
 
   % y_n
   y_n = mfo(1:ceil(1/ts):end-9);
+
+  error_count = detectar_errores_pam(x_n, y_n, A);
+  disp(sprintf('Se detectaron %i errores en %i elementos', error_count, length(x_n)));
 end
 
 function s = extraer(signal, n)
