@@ -1,5 +1,5 @@
-% vim: ff=unix fileencoding=latin1
 function graficar_seniales(x_n, x_t, y_t, mfo, y_n)
+% Grafica en graficos verticales (x_n, x_t, y_t, mfo, y_n)
   subplot(5, 1, 1);
   stem(x_n);
   title('Secuencia 4PAM - x[n]');
@@ -20,3 +20,4 @@ function graficar_seniales(x_n, x_t, y_t, mfo, y_n)
   stem(y_n);
   title('Señal detectada - y[k]');
 end
+% vim: ff=unix fileencoding=latin1

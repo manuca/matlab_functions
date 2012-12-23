@@ -1,4 +1,3 @@
-% vim: ff=unix fileencoding=latin1
 function [x_n, x_t, y_t, mfo, y_n] = simular_awgn(n)
   % Corre la simulación
   % n: Número de símbolos a transmitir (default: 10)
@@ -42,3 +41,4 @@ function s = extraer(signal, n)
   % y n-1 últimos elementos
   s = signal(n:(end-n-1));
 end
+% vim: ff=unix fileencoding=latin1
