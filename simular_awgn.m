@@ -22,27 +22,25 @@ function [x_n, x_t, y_t, mfo, y_n] = simular_awgn(n)
 
   % x_t
   x_t = modular_pam(x_n, ts);
-  x_t = extraer(x_t, 10);
+  x_t = x_t(11:end);
 
   % y_t
-  y_t = awgn(x_t, 42.77, 'measured');
+  y_t = x_t;
+  % y_t = awgn(x_t, 42.77, 'measured');
 
   % mfo
   pulso_formador = sinc([-1:ts:1]);
   norma_pulso = energia(pulso_formador, ts);
   mfo = conv(x_t, pulso_formador/norma_pulso) * ts ; % Normalizo con ts
-  mfo = extraer(mfo, 10);
+  % Nro mágico en base a las diferecias en los gráficos
+  factor_normalizacion_empirico = 1;
+  mfo = mfo(1:end-7) * factor_normalizacion_empirico;
 
   % y_n
   y_n = mfo(1:ceil(1/ts):end-9);
 
-  error_count = detectar_errores_pam(x_n, y_n, A);
-  disp(sprintf('Se detectaron %i errores en %i elementos', error_count, length(x_n)));
+  % error_count = detectar_errores_pam(x_n, y_n, A);
+  % disp(sprintf('Se detectaron %i errores en %i elementos', error_count, length(x_n)));
 end
 
-function s = extraer(signal, n)
-  % Eliminamos n primeros elementos 
-  % y n-1 últimos elementos
-  s = signal(n:(end-n-1));
-end
 % vim: ff=unix fileencoding=latin1

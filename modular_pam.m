@@ -11,11 +11,13 @@ function s = modular_pam(secuencia_pam, periodo_muestreo)
     ts = periodo_muestreo;
   end
 
-  simbolos = upsample(secuencia_pam, ceil(1/ts));
+  period = ceil(1/ts);
+  simbolos = upsample(secuencia_pam, period);
+  simbolos = simbolos(1:end-(period-1));
 
   x = -1:ts:1;
   p = sinc(x);
   norma_p = energia(p, ts);
 
-  s = conv(simbolos, p/norma_p);
+  s = conv(simbolos, p);
 end
