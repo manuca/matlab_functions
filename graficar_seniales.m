@@ -10,7 +10,7 @@ function graficar_seniales(x_n, x_t, y_t, mfo, y_n)
 
   subplot(5, 1, 3);
   stem(y_t);
-  title('Señal modulada con ruido 18.57 dB - y(t)');
+  title('Señal modulada con ruido - y(t)');
 
   subplot(5, 1, 4);
   stem(mfo);

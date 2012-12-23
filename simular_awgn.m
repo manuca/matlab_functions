@@ -15,6 +15,7 @@ function [x_n, x_t, y_t, mfo, y_n] = simular_awgn(n)
   % Apertura de la PAM
   A = 0.85;
   ts = 1/10;
+  SNR = 42.77;
 
   % x_n
   x_n = secuencia_pam(n, A);
@@ -24,7 +25,7 @@ function [x_n, x_t, y_t, mfo, y_n] = simular_awgn(n)
   x_t = extraer(x_t, 10);
 
   % y_t
-  y_t = awgn(x_t, 18.57, 'measured');
+  y_t = awgn(x_t, 42.77, 'measured');
 
   % mfo
   pulso_formador = sinc([-1:ts:1]);
