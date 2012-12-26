@@ -1,4 +1,3 @@
-% vim: ff=unix fileencoding=latin1
 function s = modular_pam(secuencia_pam, periodo_muestreo)
   % s = modular_pam(secuencia_pam, periodo_muestreo = 1/10)
   %
@@ -21,3 +20,4 @@ function s = modular_pam(secuencia_pam, periodo_muestreo)
 
   s = conv(simbolos, p);
 end
+% vim: ff=unix fileencoding=latin1
