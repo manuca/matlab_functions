@@ -1,4 +1,4 @@
-function count = detectar_errores_pam(x_n, y_n, umbral)
+function [count, errores_ubic] = detectar_errores_pam(x_n, y_n, umbral)
 % errores = detectar_errores_pam(x_n, y_n)
 %
 % Retorna la cantidad de elementos con error en y_n al aplicar las regiones de
@@ -6,10 +6,14 @@ function count = detectar_errores_pam(x_n, y_n, umbral)
 
 count = 0;
 errores = abs(y_n - x_n);
+errores_ubic = [];
 
-for i = errores
-  if i > umbral
+for i = 1:length(errores)
+  if errores(i) > umbral
     count = count + 1;
+    errores_ubic(i) = 1;
+  else
+    errores_ubic(i) = 0;
   end
 end
 

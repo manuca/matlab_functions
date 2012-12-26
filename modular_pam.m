@@ -1,4 +1,4 @@
-function s = modular_pam(secuencia_pam, periodo_muestreo)
+function [x_up, s] = modular_pam(secuencia_pam, periodo_muestreo)
   % s = modular_pam(secuencia_pam, periodo_muestreo = 1/10)
   %
   % Retorna:
@@ -14,7 +14,9 @@ function s = modular_pam(secuencia_pam, periodo_muestreo)
   simbolos = upsample(secuencia_pam, period);
   simbolos = simbolos(1:end-(period-1));
 
-  x = -1:ts:1;
+  x_up = simbolos;
+
+  x = -3:ts:3;
   p = sinc(x);
   norma_p = energia(p, ts);
 

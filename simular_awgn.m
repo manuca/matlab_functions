@@ -1,8 +1,9 @@
-function [x_n, x_t, y_t, mfo, y_n] = simular_awgn(n)
+function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
   % Corre la simulación
   % n: Número de símbolos a transmitir (default: 10)
   % Retorna
   % x_n: Secuencia de símbolos
+  % x_up: Upsample de x_n
   % x_y: Secuencia modulada por sinc
   % y_t: Secuencia con AWGN
   % mfo: Matched filter output
@@ -21,26 +22,29 @@ function [x_n, x_t, y_t, mfo, y_n] = simular_awgn(n)
   x_n = secuencia_pam(n, A);
 
   % x_t
-  x_t = modular_pam(x_n, ts);
-  x_t = x_t(11:(end-10));
+  [x_up x_t] = modular_pam(x_n, ts);
+  x_t = x_t(1:(end));
 
   % y_t
   y_t = x_t;
   % y_t = awgn(x_t, 42.77, 'measured');
 
   % mfo
-  pulso_formador = sinc([-1:ts:1]);
+  pulso_formador = sinc([-3:ts:3]);
   norma_pulso = energia(pulso_formador, ts);
   mfo = conv(x_t, pulso_formador/norma_pulso) * ts ; % Normalizo con ts
   % Nro mágico para corregir diferecias en los gráficos
-  factor_normalizacion_empirico = 1;
-  mfo = mfo(11:(end-10)) * factor_normalizacion_empirico;
+  factor_normalizacion_empirico = 1/1.1;
+  mfo = mfo(31:(end-30)) * factor_normalizacion_empirico;
 
   % y_n
   periodo_discreto = ceil(1/ts);
-  y_n = mfo(1:periodo_discreto:end);
+  y_n = mfo(31:(10):end);
 
-  error_count = detectar_errores_pam(x_n, y_n, A);
+  % Para alinear y restar
+  y_n = y_n(1:end-3);
+
+  [error_count, errores_ubic] = detectar_errores_pam(x_n, y_n, A);
   disp(sprintf('Se detectaron %i errores en %i elementos', error_count, length(x_n)));
 end
 
