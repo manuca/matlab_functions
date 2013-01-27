@@ -30,20 +30,21 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
   % y_t = awgn(x_t, 42.77, 'measured');
 
   % mfo
-  pulso_formador = sinc([-3:ts:3]);
+  pulso_formador = sinc([-7:ts:7]);
   norma_pulso = energia(pulso_formador, ts);
   mfo = conv(x_t, pulso_formador/norma_pulso) * ts ; % Normalizo con ts
   % Nro mágico para corregir diferecias en los gráficos
   factor_normalizacion_empirico = 1/1.1;
-  mfo = mfo(31:(end-30)) * factor_normalizacion_empirico;
+  mfo = mfo(71:(end-70)) * factor_normalizacion_empirico;
 
   % y_n
   periodo_discreto = ceil(1/ts);
-  y_n = mfo(31:(10):end);
+  y_n = mfo(71:(10):end);
 
   % Para alinear y restar
-  y_n = y_n(1:end-3);
+  y_n = y_n(1:end-7);
 
+  % errores_ubic = [];
   [error_count, errores_ubic] = detectar_errores_pam(x_n, y_n, A);
   disp(sprintf('Se detectaron %i errores en %i elementos', error_count, length(x_n)));
 end
