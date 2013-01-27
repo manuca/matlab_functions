@@ -23,7 +23,7 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
 
   % x_t
   [x_up x_t] = modular_pam(x_n, ts);
-  x_t = x_t(1:(end));
+  % x_t = x_t(1:(end));
 
   % y_t
   y_t = x_t;

@@ -2,6 +2,7 @@ function [x_up, s] = modular_pam(secuencia_pam, periodo_muestreo)
   % s = modular_pam(secuencia_pam, periodo_muestreo = 1/10)
   %
   % Retorna:
+  % x_up:  Secuencia sobremuestreada según período de muestreo
   % s: Señal modulada por pulso formador (sinc de período 1 y energía 1)
 
   if (nargin == 1)
@@ -12,7 +13,7 @@ function [x_up, s] = modular_pam(secuencia_pam, periodo_muestreo)
 
   period = ceil(1/ts);
   simbolos = upsample(secuencia_pam, period);
-  simbolos = simbolos(1:end-(period-1));
+  % simbolos = simbolos(1:end-(period-1));
 
   x_up = simbolos;
 
