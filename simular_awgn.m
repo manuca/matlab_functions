@@ -26,7 +26,7 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
 
   % y_t
   % y_t = x_t;
-  y_t = awgn(x_t, 42.77, 'measured');
+  y_t = awgn(x_t, 18.57, 'measured');
 
   % mfo
   pulso_formador = sinc([-8:ts:8]);

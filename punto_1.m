@@ -3,7 +3,7 @@ function punto_1(simbolos, show_plot)
   % y su detección con un filtro adaptado.
   
   if (nargin == 0)
-    simbolos = 100;
+    simbolos = 1000000;
     show_plot = false;
   elseif (nargin == 1)
     show_plot = false;
