@@ -23,28 +23,30 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
 
   % x_t
   [x_up x_t] = modular_pam(x_n, ts);
-  % x_t = x_t(1:(end));
 
   % y_t
   y_t = x_t;
   % y_t = awgn(x_t, 42.77, 'measured');
 
   % mfo
-  pulso_formador = sinc([-7:ts:7]);
+  pulso_formador = sinc([-4:ts:4]);
   norma_pulso = energia(pulso_formador, ts);
-  mfo = conv(x_t, pulso_formador/norma_pulso) * ts ; % Normalizo con ts
+  mfo = conv(y_t, pulso_formador/norma_pulso) * ts ; % Normalizo con ts
   % Nro mágico para corregir diferecias en los gráficos
-  factor_normalizacion_empirico = 1/1.1;
-  mfo = mfo(71:(end-70)) * factor_normalizacion_empirico;
+  % factor_normalizacion_empirico = 1/1.1;
+  % mfo = mfo(71:(end-70)) * factor_normalizacion_empirico;
 
   % y_n
   periodo_discreto = ceil(1/ts);
-  y_n = mfo(71:(10):end);
+  y_n = mfo(81:10:end);
 
   % Para alinear y restar
-  y_n = y_n(1:end-7);
+  cantidad_truncar = length(y_n) - n;
+  y_n = y_n(1:end-cantidad_truncar);
 
-  % errores_ubic = [];
+  errores_ubic  = [];
+  errores_count = 0;
+
   [error_count, errores_ubic] = detectar_errores_pam(x_n, y_n, A);
   disp(sprintf('Se detectaron %i errores en %i elementos', error_count, length(x_n)));
 end

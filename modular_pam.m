@@ -17,7 +17,7 @@ function [x_up, s] = modular_pam(secuencia_pam, periodo_muestreo)
 
   x_up = simbolos;
 
-  x = -7:ts:7;
+  x = -4:ts:4;
   p = sinc(x);
   norma_p = energia(p, ts);
 
