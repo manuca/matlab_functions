@@ -1,4 +1,4 @@
-function punto_1(simbolos, show_plot)
+function punto_1a(simbolos, show_plot)
   % Simula la transmisión de una señal 4-PAM a través de un canal ideal
   % y su detección con un filtro adaptado.
   
