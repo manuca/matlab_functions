@@ -29,7 +29,7 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
   % y_t = awgn(x_t, 42.77, 'measured');
 
   % mfo
-  pulso_formador = sinc([-4:ts:4]);
+  pulso_formador = sinc([-6:ts:6]);
   norma_pulso = energia(pulso_formador, ts);
   mfo = conv(y_t, pulso_formador/norma_pulso) * ts ; % Normalizo con ts
   % Nro mágico para corregir diferecias en los gráficos
@@ -38,7 +38,7 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
 
   % y_n
   periodo_discreto = ceil(1/ts);
-  y_n = mfo(81:10:end);
+  y_n = mfo(121:10:end);
 
   % Para alinear y restar
   cantidad_truncar = length(y_n) - n;
