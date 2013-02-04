@@ -17,5 +17,7 @@ for i = 1:length(errores)
   end
 end
 
+disp(sprintf('Se detectaron %i errores en %i elementos', count, length(x_n)));
+
 end
 % vim: ff=unix fileencoding=latin1

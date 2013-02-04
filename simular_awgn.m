@@ -1,4 +1,4 @@
-function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
+function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n, aplicar_canal)
   % Corre la simulación
   % n: Número de símbolos a transmitir (default: 10)
   % Retorna
@@ -9,14 +9,15 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
   % mfo: Matched filter output
   % y_n: Secuencia de símbolos detectada
 
-  if(nargin == 0)
-    n = 10;
+  if(nargin == 1)
+    aplicar_canal = false;
   end
 
   % Apertura de la PAM
   A = 0.85;
   ts = 1/10;
-  SNR = 42.77;
+  periodo_discreto = 10;
+  SNR = 18.57;
 
   % x_n
   x_n = secuencia_pam(n, A);
@@ -25,30 +26,30 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n)
   [x_up x_t] = modular_pam(x_n, ts);
 
   % y_t
-  % y_t = x_t;
-  y_t = awgn(x_t, 18.57, 'measured');
+  if(aplicar_canal)
+    h_t = generar_canal(ts);
+    y_t = conv(x_t, h_t)*ts;
+    offset_mfo = 208;
+  else
+    y_t = x_t;
+    offset_mfo = 201;
+  end
+
+  % y_t + AWGN
+  y_t = awgn(y_t, SNR, 'measured');
 
   % mfo
-  pulso_formador = sinc([-8:ts:8]);
-  norma_pulso = energia(pulso_formador, ts);
-  mfo = conv(y_t, pulso_formador/norma_pulso) * ts ; % Normalizo con ts
-  % Nro mágico para corregir diferecias en los gráficos
-  % factor_normalizacion_empirico = 1/1.1;
-  % mfo = mfo(71:(end-70)) * factor_normalizacion_empirico;
+  mfo = salida_filtro_adaptado(y_t, ts);
 
-  % y_n
-  periodo_discreto = ceil(1/ts);
-  y_n = mfo(161:10:end);
-
-  % Para alinear y restar
-  cantidad_truncar = length(y_n) - n;
-  y_n = y_n(1:end-cantidad_truncar);
+  % Alinear y_n
+  y_n = mfo(offset_mfo:periodo_discreto:end);
+  % Extraer los n símbolos detectados
+  y_n = y_n(1:n);
 
   errores_ubic  = [];
   errores_count = 0;
 
   [error_count, errores_ubic] = detectar_errores_pam(x_n, y_n, A);
-  disp(sprintf('Se detectaron %i errores en %i elementos', error_count, length(x_n)));
 end
 
 % vim: ff=unix fileencoding=latin1

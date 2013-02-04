@@ -6,4 +6,3 @@ function punto_1a
 end
 
 % vim: ff=unix fileencoding=latin1
-
