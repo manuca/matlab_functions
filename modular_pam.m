@@ -1,4 +1,4 @@
-function [x_up, s] = modular_pam(secuencia_pam, periodo_muestreo)
+function [x_up, s] = modular_pam(secuencia_pam, ts, periodo)
   % s = modular_pam(secuencia_pam, periodo_muestreo = 1/10)
   %
   % Retorna:
@@ -7,13 +7,12 @@ function [x_up, s] = modular_pam(secuencia_pam, periodo_muestreo)
 
   if (nargin == 1)
     ts = 1/10;
-  else
-    ts = periodo_muestreo;
+    periodo = 10;
+  elseif (nargin == 2)
+    periodo = 10;
   end
 
-  period = ceil(1/ts);
-  simbolos = upsample(secuencia_pam, period);
-  % simbolos = simbolos(1:end-(period-1));
+  simbolos = upsample(secuencia_pam, periodo);
 
   x_up = simbolos;
 

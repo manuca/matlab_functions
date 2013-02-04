@@ -1,4 +1,4 @@
-function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n, aplicar_canal)
+function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n, aplicar_canal, periodo_discreto)
   % Corre la simulación
   % n: Número de símbolos a transmitir (default: 10)
   % Retorna
@@ -11,19 +11,21 @@ function [x_n, x_up, x_t, y_t, mfo, y_n, errores_ubic] = simular_awgn(n, aplicar
 
   if(nargin == 1)
     aplicar_canal = false;
+    periodo_discreto = 10;
+  elseif(nargin == 2)
+    periodo_discreto = 10;
   end
 
   % Apertura de la PAM
   A = 0.85;
   ts = 1/10;
-  periodo_discreto = 10;
   SNR = 18.57;
 
   % x_n
   x_n = secuencia_pam(n, A);
 
   % x_t
-  [x_up x_t] = modular_pam(x_n, ts);
+  [x_up x_t] = modular_pam(x_n, ts, periodo_discreto);
 
   % y_t
   if(aplicar_canal)
